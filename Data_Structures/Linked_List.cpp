@@ -1,5 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
+
 struct node
 {
     int value;
@@ -97,6 +98,62 @@ void printLinkedList(struct node *start)
     cout<<endl;
 }
 
+struct node *valuAt(struct node *start,int index)
+{
+    int count=0;
+    if(sizeOfLinkedList(start)<index)
+        return NULL;
+    else
+    {
+        while(count<index)
+        {
+            start=start->next;
+            count++;
+        }
+        return start;
+    }
+}
+
+void deleteFront(struct node **start)
+{
+    if(*start==NULL)
+        return;
+    struct node *temp=*start;
+    *start=temp->next;
+}
+void deleteBack(struct node **start)
+{
+    struct node *temp=*start;
+    if(temp->next==NULL)
+    {
+        *start=NULL;
+        return;
+    }
+    while(temp->next->next!=NULL)
+    {
+        temp=temp->next;
+    }
+    temp->next=NULL;
+}
+
+void deleteAt(struct node **start,int index)
+{
+    struct node *temp1=*start,*temp2=*start;
+    int count=0;
+    if(sizeOfLinkedList(*start)<index)
+        return;
+    else
+    {
+        while(count<index)
+        {
+            temp1=temp1->next;
+            if(count!=0)
+                temp2=temp2->next;
+            count++;
+        }
+        temp2->next=temp1->next;
+    }
+}
 int main()
 {
     int n,val;
@@ -119,6 +176,9 @@ int main()
     setLink(temp,NULL);
     setValue(temp,1000);
     insertAt(&start,temp,3);
+    deleteAt(&start2,3);
+    deleteFront(&start);
+    deleteBack(&start);
     cout<<sizeOfLinkedList(start)<<endl;
     printLinkedList(start);
     printLinkedList(start2);
